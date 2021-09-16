@@ -1,0 +1,30 @@
+---
+# tasks file for golang installation
+# https://golang.org/doc/install
+
+- name: download
+  ansible.builtin.get_url:
+    checksum: sha256:{{ checksum['linux'][(ansible_architecture == "x86_64") | ternary("amd64", ansible_architecture)] }}
+    dest: /usr/local/src/go{{ golang_version }}.tar.gz
+    url: https://golang.org/dl/go{{ golang_version }}.linux-{{ (ansible_architecture == "x86_64") | ternary("amd64", ansible_architecture) }}.tar.gz
+
+- name: install
+  ansible.builtin.unarchive:
+    creates: /usr/local/go
+    dest: /usr/local
+    group: root
+    owner: root
+    remote_src: yes
+    src: /usr/local/src/go{{ golang_version }}.tar.gz
+
+- name: PATH
+  ansible.builtin.copy:
+    content: |
+      # Ansible configured file
+      GOPATH="${HOME}/go"
+      PATH="/usr/local/go/bin:${PATH}:${GOPATH}/bin"
+      export GOPATH PATH
+    dest: /etc/profile.d/golang.sh
+    group: root
+    mode: 0644
+    owner: root

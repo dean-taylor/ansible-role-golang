@@ -1,2 +1,9 @@
 ---
 # vars file for golang
+# https://golang.org/dl/
+checksum:
+  darwin:
+    amd64: 3c452046b1dfa27b70d3217c9fe6de266f9fd74d83aad81382fead70efcdffca
+  linux:
+    386: e60bb44046f424ba2cc47db7b183079b5add2f8cfa6887daf45bf2f317cc2f53
+    amd64: dab7d9c34361dc21ec237d584590d72500652e7c909bf082758fb63064fca0ef
